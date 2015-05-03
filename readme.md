@@ -35,7 +35,7 @@ while size(T) > 0:
         M.append(m())
 ```
 
-Let `i` and `j` be two tasks with start and finish times `i.s`, `j.s` and `i.f`, `j.f`. `i` and `j` are said to be **non-conflicting** if `i.f <= j.s` or `j.f <= i.s`. 
+Let *i* and *j* be two tasks with start and finish times *i.s*, *j.s* and *i.f*, *j.f*. *i* and *j* are said to be **non-conflicting** if *i.f <= j.s* or *j.f <= i.s*. 
 
 This algorithm produces a schedule of the tasks with the minimum number of machines in *O(nlogn)* time.
 
@@ -60,13 +60,13 @@ This algorithm produces a schedule of the tasks with the minimum number of machi
 - A **spanning tree** of a graph is a spanning subgraph that is a tree.
 
 ##Theorem 6.6
-If *G* is a graph with *m* edges then: *sumDegree(G) == 2*m*.
+If *G* is a graph with *m* edges then: *sumDegree(G) == 2m*.
 
 ##Theorem 6.7
 If *G* is a directed graph with *m* edges then: *sumInDegree(G) == sumOutDegree(G) == m*.
 
 ##Theorem 6.8
-Let *G* is a simple graph with *n* vertices and *m* edges. If *G* is undirected, then *m <= n*(n-1)/2* and if *G* is directed then *m <= n*(n-1)*.
+Let *G* is a simple graph with *n* vertices and *m* edges. If *G* is undirected, then *m <= n(n-1)/2* and if *G* is directed then *m <= n(n-1)*.
 
 ##Theorem 6.11
 Let *G* be an undirected graph with *n* vertices and *m* edges. Then we have the following: 
