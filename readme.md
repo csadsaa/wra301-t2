@@ -164,14 +164,18 @@ Given a directed graph *G* with arbitrary vertices *u* and *v*:
 - A **directed cycle** of *G* is a cycle where all the edges are traversed according to their directions.
 - G is **acyclic** if it has no directed cycles.
 - The **transitive closure** of *G* is the digraph *C* such that the vertices of *C* are the same as the vertices of *G*, and *C* has an edge *(u,v)*, whenever *C* has a directed path from *u* to *v*.
+
 ###6.4.1 Traversing a Digraph
+
 ###6.4.2 Transitive Closure
 ```python 
 FloydWarshall(G):
 #       input:      a digraph G with n vertices
 #       output:     the transitive closure C of G
 ```
+
 ###6.4.3 DFS and Garbage Collection (Keep it short)
+
 ###6.4.4 Directed Acyclic Graphs (DAGs)
 ```python
 TopologicalSort(G):
