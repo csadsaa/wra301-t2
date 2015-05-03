@@ -114,16 +114,42 @@ Let *G* be a graph with *n* vertices and *m* edges represented with the adjacenc
 - Computing a path between two vertices of *G*, or reporting that no such path exists
 - Computing a cycle in *G*, or reporting that *G* has no cycles
 
-##6.3.3 Breadth-First Search
+##6.3.3 Breadth-First Search (BFS)
 ```python
 #   BFS(G,s):
 #       input:      a graph G and a vertex s of G
 #       output:     a labeling of the edges in the connected component of s as discovery edges and cross edges
-L = [] # empty container or list
-
+L = [] # list of containers
+L.append([s]) # append s into an empty container in the list of containers
+i = 0
+while len(L[i]) > 0:
+    L.append([]) # add an empty container
+    for v in L[i]:
+        for e in G.incidentEdges(v):
+            if not e.explored:
+                e.explored = true
+                w = G.oppositeVertex(v,e)
+                if not w.explored:
+                    e.label = "discovery"
+                    L[i+1].append(w)
+                else
+                    e.label = "cross"
+    i++
 ```
 ###Theorem 6.18
+Let *G* be an undirected graph on which a BFS traversal starting at vertex *s* has been performed. Then:
+- The traversal visits all the vertices in the connected component of *s*
+- The discovery edges form a spanning tree *T* of the connected component of *s*
+- For each vertex *v* at level *i*, the path of tree *T* between *s* and *v* has *i* edges, and any other path of *G* between *s* and *v* has at least *i* edges
+- If *(u,v)* is a cross edge, then the level numbers of *u* and *v* differ by at most 1
+
 ###Theorem 6.19
+Let *G* be a graph with *n* vertices and *m* edges represented with the adjacency list structure. A BFS traversal of *G* takes *O(n+m)* time. Also, there exist *O(n+m)*-time algorithms based on BFS for the following problems:
+- Testing whether *G* is connected
+- Computing a spanning forest of *G*
+- Computing the connected components of *G*
+- Given a start vertex *s* of *G*, computing, for every vertex *v* of *G*, a path with the minimum number of edges between *s* and *v*, or reporting that no such path exists
+- Computing a cycle in *G*, or reporting that *G* has no cycles
 
 ##Comparing DFS and BFS
 
@@ -132,6 +158,3 @@ L = [] # empty container or list
 #7.1 Single-Source Shortest Paths
 #7.2 All-Pairs Shortest Paths
 #7.3 Minimum Spanning Trees
-
-#References
-Unless otherwise stated, all algorithms and notes were derived from Goodrich and Tamassia's *Algorithm Design: Foundations, Analysis, and Internet Examples*.
