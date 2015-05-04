@@ -163,9 +163,23 @@ Given a directed graph *G* with arbitrary vertices *u* and *v*:
 - *G* is **strongly connected** if *u* reaches *v* and *v* reaches *u*.
 - A **directed cycle** of *G* is a cycle where all the edges are traversed according to their directions.
 - G is **acyclic** if it has no directed cycles.
-- The **transitive closure** of *G* is the digraph *C* such that the vertices of *C* are the same as the vertices of *G*, and *C* has an edge *(u,v)*, whenever *C* has a directed path from *u* to *v*.
+- The **transitive closure** of *G* is the digraph *C* such that the vertices of *C* are the same as the vertices of *G*, and *C* has an edge *(u,v)*, whenever *G* has a directed path from *u* to *v*.
 
 ###6.4.1 Traversing a Digraph
+A digraph can be traversed with the DFS and BFS algorithms. The only real difference is that these algorithms now traverse the edges based on their directions. 
+
+The edges traversed by a directed DFS or BFS can be partitioned into **discovery/tree edges** and **non-tree edges**. 
+
+The non-tree edges of a directed DFS can be split into the following categories:
+- **back edges**, which connect a vertex to an ancestor in the DFS tree 
+- **forward edges**, which connect a vertex to a descendant in the DFS tree
+- **cross edges**, which connect a vertex to a vertex which is neither its ancestor nor its descendant
+
+The non-tree edges of a directed BFS can be split into the following categories:
+- **back edges**, which connect a vertex to an ancestor in the BFS tree 
+- **cross edges**, which connect a vertex to a vertex which is neither its ancestor nor its descendant
+
+In a BFS tree **there are no forward edges**.
 
 ###6.4.2 Transitive Closure
 ```python 
