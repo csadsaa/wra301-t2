@@ -401,15 +401,15 @@ Borůvka's algorithm differs from the previous two algorithms in that it does no
 
 ```python
 BorůvkaMST(g):
-#       input:      a weighted connected graph g with n vertices and m edges
+#       input:      a weighted connected graph g = (V,E) with n vertices and m edges
 #       output:     a minimum spanning tree T for g
-Initialize a forest T to be a set of one-vertex trees, one for each vertex of the graph.
-while T has more than one component:
-    for each component C of T:
-        begin with an empty set of edges S
-        for each vertex v in C:
-            find the edge with least weight from v to a vertex outside of C, and add it to S
-        add the cheapest edge in S to T
+Let T be a subgraph of G initially containing just the vertices in V
+while T has fewer than n - 1 edges:
+    for each connected component C of T:
+        find the smallest weight edge e = (v, u) in E where v is in C but u is not
+        if e not in T:
+            add e to T
+return T
 ```
 
 ####Theorem 7.14
