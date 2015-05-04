@@ -175,9 +175,11 @@ The non-tree edges of a directed DFS can be split into the following categories:
 - **forward edges**, which connect a vertex to a descendant in the DFS tree
 - **cross edges**, which connect a vertex to a vertex which is neither its ancestor nor its descendant
 
-####Theorem 6.20 Let *G* be a digraph. Depth-first search on *G* starting at a vertex *s* visits all the vertices of *G* that are reachable from *s*. Also, the DFS tree contains directed paths from *s* to every vertex reachable from *s*.
+####Theorem 6.20 
+Let *G* be a digraph. Depth-first search on *G* starting at a vertex *s* visits all the vertices of *G* that are reachable from *s*. Also, the DFS tree contains directed paths from *s* to every vertex reachable from *s*.
 
-####Theorem 6.21 Let *G* be a digraph with *n* vertices and *m* edges. The following problems can be solved by an algorithm that runs in *O(n(n+m))* time:
+####Theorem 6.21 
+Let *G* be a digraph with *n* vertices and *m* edges. The following problems can be solved by an algorithm that runs in *O(n(n+m))* time:
 - Computing, for each vertex *v* of *G*, the subgraph reachable from *v*
 - Testing whether *G* is strongly connected
 - Computing the transitive closure *C* of *G*
@@ -190,7 +192,7 @@ In a BFS tree **there are no forward edges**.
 
 ###6.4.2 Transitive Closure
 ```python 
-FloydWarshall(G):
+FloydWarshall(g):
 #       input:      a digraph g with n vertices
 #       output:     the transitive closure g* of g
 C = [G()] # list to hold subgraphs, initialized with empty digraph
@@ -212,7 +214,7 @@ The **Floyd-Warshall algorithm** calculates the transitive closure of a digraph 
 
 ###6.4.4 Directed Acyclic Graphs (DAGs)
 ```python
-TopologicalSort(G):
+TopologicalSort(g):
 #       input:      a digraph g with n vertices
 #       output:     a topological ordering V of G or null if G has a directed cycle
 V = []
