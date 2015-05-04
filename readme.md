@@ -372,18 +372,25 @@ Given a simple connected weighted graph *G* with *n* vertices and *m* edges, Kru
 ###7.3.2 Prim-Jarník Algorithm
 ```python
 PrimJarníkMST(g):
-#       input:      a weighted connected graph g with n vertices and m edges
-#       output:     a minimum spanning tree T for g
-v = g.vertices()[random(n)] # pick any vertex
-v.d = 0
-for u in g.vertices():
-    if u != v:
-        u.d = float("inf")
-T = []
-q = PriorityQ()
-for u in g.vertices():
-    q[u.d] = 
-
+#       input:      weighted, undirected graph G with vertices V
+#       output:     list of edges in MST
+for all v in V:
+    v.cost = inf
+    v.prev = null
+source = a random v in V
+source.cost = 0
+MST = []
+PQ = PriorityQueue(V) # priorities will be v.cost values
+while PQ is not empty:
+    v = PQ.removeMin()
+    if v.prev != null:
+        MST.append((v, v.prev))
+    for all incident edges (v,u) of v:
+        if u.cost > (v,u).weight:
+            u.cost = (v,u).weight
+            u.prev = v
+            PQ.replaceKey(u, u.cost)
+return MST
 ```
 
 ###7.3.3 Barůvka's Algorithm
