@@ -15,7 +15,7 @@ for i in S:
     i.v = i.b/i.w
 w = 0 # cumulative weight thus far
 while w < W:
-    i = minValueIndex(S)
+    i = maxValueIndex(S)
     i.x = min(i.w, W - w)
     w += i.x
 ```
@@ -93,17 +93,17 @@ The adjacency list structure is superior to the adjacency matrix in space, and i
 ##6.3 Graph Traversal
 ###6.3.1 Depth-First Search (DFS)
 ```python
-DFS(G,v):
-#       input:      a graph G and a vertex v of G
+DFS(g,v):
+#       input:      a graph g and a vertex v of g
 #       output:     a labeling of the edges in the connected component of v as discovery edges and back edges
 v.explored = true
-for e in G.incidentEdges(v):
+for e in g.incidentEdges(v):
     if not e.explored:
         e.explored = true
-        w = G.oppositeVertex(v,e)
+        w = g.oppositeVertex(v,e)
         if not w.explored:
             e.label = "discovery"
-            DFS(G,w)
+            DFS(g,w)
         else:
             e.label = "back"
 ```
@@ -118,8 +118,8 @@ Let *G* be a graph with *n* vertices and *m* edges represented with the adjacenc
 
 ###6.3.3 Breadth-First Search (BFS)
 ```python
-BFS(G,s):
-#       input:      a graph G and a vertex s of G
+BFS(g,s):
+#       input:      a graph g and a vertex s of g
 #       output:     a labeling of the edges in the connected component of s as discovery edges and cross edges
 L = [] # list of containers
 L.append([s]) # append s into an empty container in the list of containers
@@ -127,10 +127,10 @@ i = 0
 while len(L[i]) > 0:
     L.append([]) # add an empty container
     for v in L[i]:
-        for e in G.incidentEdges(v):
+        for e in g.incidentEdges(v):
             if not e.explored:
                 e.explored = true
-                w = G.oppositeVertex(v,e)
+                w = g.oppositeVertex(v,e)
                 if not w.explored:
                     e.label = "discovery"
                     L[i+1].append(w)
@@ -175,6 +175,13 @@ The non-tree edges of a directed DFS can be split into the following categories:
 - **forward edges**, which connect a vertex to a descendant in the DFS tree
 - **cross edges**, which connect a vertex to a vertex which is neither its ancestor nor its descendant
 
+####Theorem 6.20 Let *G* be a digraph. Depth-first search on *G* starting at a vertex *s* visits all the vertices of *G* that are reachable from *s*. Also, the DFS tree contains directed paths from *s* to every vertex reachable from *s*.
+
+####Theorem 6.21 Let *G* be a digraph with *n* vertices and *m* edges. The following problems can be solved by an algorithm that runs in *O(n(n+m))* time:
+- Computing, for each vertex *v* of *G*, the subgraph reachable from *v*
+- Testing whether *G* is strongly connected
+- Computing the transitive closure *C* of *G*
+
 The non-tree edges of a directed BFS can be split into the following categories:
 - **back edges**, which connect a vertex to an ancestor in the BFS tree 
 - **cross edges**, which connect a vertex to a vertex which is neither its ancestor nor its descendant
@@ -184,18 +191,56 @@ In a BFS tree **there are no forward edges**.
 ###6.4.2 Transitive Closure
 ```python 
 FloydWarshall(G):
-#       input:      a digraph G with n vertices
-#       output:     the transitive closure C of G
+#       input:      a digraph g with n vertices
+#       output:     the transitive closure g* of g
+C = [G()] # list to hold subgraphs, initialized with empty digraph
+for k in range(n): # let k loop from 0 to n-1
+    c = C[k]
+    C.append(c)
+    for i in range(n):
+        if i != k:
+            for j in range(n):
+                if j != i and j != k:
+                    if g.containsEdge(i,k) and g.containsEdge(k,j):
+                        if not g.containsEdge(i,j):
+                            c.addEdge(i,j)
+return C.pop()
 ```
+The **Floyd-Warshall algorithm** calculates the transitive closure of a digraph *G*. The outer loop of this algorithm runs *n* times whilst the inner loop considers each pair of *O(n<sup>2</sup>)* vertices. If a data structure that supports methods *areAdjacent* and *insertDirectedEdge* in *O(1)* time is used, such as the adjacency matrix structure, then the total running time of the algorithm is *O(n<sup>3</sup>)*.
 
-###6.4.3 DFS and Garbage Collection (Keep it short)
+###6.4.3 DFS and Garbage Collection (To be done?)
 
 ###6.4.4 Directed Acyclic Graphs (DAGs)
 ```python
 TopologicalSort(G):
-#       input:      a digraph G with n vertices
-#       output:     a topological ordering V of G or an indication that G has a directed cycle
+#       input:      a digraph g with n vertices
+#       output:     a topological ordering V of G or null if G has a directed cycle
+V = []
+S = []
+for u in g.vertices():
+    u.inCounter = inDegree(u)
+    if u.inCounter == 0:
+        S.append(u)
+while len(S) > 0:
+    u = S.pop()
+    V.append(u)
+    for e in g.outIncidentEdges(u):
+        w = g.oppositeVertex(u,e)
+        w.inCounter -= 1
+        if w.inCounter == 0:
+            S.append(w)
+if len(V) == len(G):
+    return V
+else:
+    return null
 ```
+A **topological ordering** of *G* is an ordering *(v<sub>1</sub>,v<sub>2</sub>,...,v<sub>n</sub>)* of the vertices of *G* such that for every edge *(v<sub>i</sub>,v<sub>j</sub>)* of *G*, *i < j*.
+
+####Theorem 6.25
+A digraph has a topological ordering if and only if it is acyclic.
+
+####Theorem 6.26 
+Let *G* be a digraph with *n* vertices and *m* edges. The topological sorting algorithm runs in *O(n+m)* time using *O(n)* auxiliary space, and either computes a topological ordering of *G* or fails to number some vertices, which indicates that *G* has a directed cycle.
 
 ##7.1 Single-Source Shortest Paths
 ##7.2 All-Pairs Shortest Paths
