@@ -374,7 +374,7 @@ Given a simple connected weighted graph *G* with *n* vertices and *m* edges, Kru
 PrimJarníkMST(g):
 #       input:      weighted, undirected graph G with vertices V
 #       output:     list of edges in MST
-for all v in V:
+for v in V:
     v.cost = inf
     v.prev = null
 source = a random v in V
@@ -385,7 +385,7 @@ while PQ is not empty:
     v = PQ.removeMin()
     if v.prev != null:
         MST.append((v, v.prev))
-    for all incident edges (v,u) of v:
+    for incident edges (v,u) of v:
         if u.cost > (v,u).weight:
             u.cost = (v,u).weight
             u.prev = v
@@ -393,4 +393,24 @@ while PQ is not empty:
 return MST
 ```
 
-###7.3.3 Barůvka's Algorithm
+####Theorem 7.13
+Given a simple connected weighted graph *G* with *n* vertices and *m* edges, the *Prim-Jarnik* algorithm constructs a minimum spanning tree for *G* in *O(mlogn)* time.
+
+###7.3.3 Borůvka's Algorithm
+Borůvka's algorithm differs from the previous two algorithms in that it does not utilize a priority queue to produce an MST.
+
+```python
+BorůvkaMST(g):
+#       input:      a weighted connected graph g with n vertices and m edges
+#       output:     a minimum spanning tree T for g
+Initialize a forest T to be a set of one-vertex trees, one for each vertex of the graph.
+while T has more than one component:
+    for each component C of T:
+        begin with an empty set of edges S
+        for each vertex v in C:
+            find the edge with least weight from v to a vertex outside of C, and add it to S
+        add the cheapest edge in S to T
+```
+
+####Theorem 7.14
+*Borůvka's algorithm* computes a minimum spanning tree for a connected weighted graph *G* with *n* vertices and *m* edges in *O(mlogn)* time.
