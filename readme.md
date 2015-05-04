@@ -343,6 +343,47 @@ Given a simple weighted directed graph *G* with *n* vertices and no negative-wei
 
 ###7.2.2 Computing Shortest Paths via Matrix Multiplication (not done?)
 
-
-
 ##7.3 Minimum Spanning Trees
+Computing a spanning tree *T* with smallest total weight is the problem of constructing a **minimum spanning tree** (MST). The algorithms to solve this problem are all applications of the **greedy method**.
+
+####Theorem 7.10
+Let *G* be a weighted connected graph, and let *V<sub>1</sub>* and *V<sub>2</sub>* be a partition of the vertices of *G* into two disjoint (intersection produces the empty set) nonempty sets. Furthermore, let *e* be an edge in *G* with minimum weight from among those with one endpoint in *V<sub>1</sub>* and the other in *V<sub>2</sub>*. There is a minimum spanning tree *T* that has *e* as one of its edges.
+
+###7.3.1 Kruskal's Algorithm
+```python
+KruskalMST(g):
+#       input:      a simple connected weighted graph g with n vertices and m edges
+#       output:     a minimum spanning tree T for G
+c =  Clusters() # empty collection of clusters
+for v in g.vertices():
+    c.append(Cluster(v))
+q = PriorityQ(g.edges()) # use the edge weights as keys
+T = [] # empty tree
+while len(T) < n - 1:
+    e = q.removeMin()
+    if c.clusterContaining(e.origin) != c.clusterContaining(e.destination):
+        T.append(e)
+        c.union(c.clusterContaining(e.origin), c.clusterContaining(e.destination))
+return T
+```
+####Theorem 7.12 
+Given a simple connected weighted graph *G* with *n* vertices and *m* edges, Kruskal's algorithm constructs a minimum spanning tree for *G* in time *O(mlogn)*. 
+
+###7.3.2 Prim-Jarník Algorithm
+```python
+PrimJarníkMST(g):
+#       input:      a weighted connected graph g with n vertices and m edges
+#       output:     a minimum spanning tree T for g
+v = g.vertices()[random(n)] # pick any vertex
+v.d = 0
+for u in g.vertices():
+    if u != v:
+        u.d = float("inf")
+T = []
+q = PriorityQ()
+for u in g.vertices():
+    q[u.d] = 
+
+```
+
+###7.3.3 Barůvka's Algorithm
