@@ -315,4 +315,34 @@ return [u.d for u in V]
 *DAGShortestPaths* computes the distance from a start vertex *v* to each other vertex in a directed n-vertex graph *G* with *m* edges in *O(n+m)* time.
 
 ##7.2 All-Pairs Shortest Paths
+###7.2.1 A Dynamic Programming Shortest Path Algorithm
+```python
+AllPairsShortestPaths(g):
+#       input:      a simple weighted directed graph g with n edges and without negative-weight cycles
+#       output:     a matrix D such that D[i][j] is the distance from v_i to v_j
+D = [n][n] # declare a n by n matrix
+for i in range(n):
+    for j in range(n):
+        if i == j:
+            D[i][i] = 0
+        else:
+            if g.hasEdge(i,j):
+                D[i][j] = g.edgeWeight(i,j)
+            else:
+                D[i][j] = float("inf")
+for k in range(n):
+    d = [n][n] # declare a n by n matrix
+    for i in range(n):
+        for j in range(n):
+            d[i][j] = min(D[i][j], D[i][k] + D[k][j])
+    D = d
+return D
+```
+####Theorem 7.7 
+Given a simple weighted directed graph *G* with *n* vertices and no negative-weight cycles, *AllParisShortestPaths* computes the shortest-path distances between each pair of vertices of *G* in *O(n<sup>3</sup>)* time.
+
+###7.2.2 Computing Shortest Paths via Matrix Multiplication (not done?)
+
+
+
 ##7.3 Minimum Spanning Trees
