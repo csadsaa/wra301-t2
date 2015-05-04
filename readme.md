@@ -245,5 +245,74 @@ A digraph has a topological ordering if and only if it is acyclic.
 Let *G* be a digraph with *n* vertices and *m* edges. The topological sorting algorithm runs in *O(n+m)* time using *O(n)* auxiliary space, and either computes a topological ordering of *G* or fails to number some vertices, which indicates that *G* has a directed cycle.
 
 ##7.1 Single-Source Shortest Paths
+
+The **length** of a path *P* is the sum of the weights of the edges of *P*. The **distance** from a vertex *u* to a vertex *v*, denoted *d(u,v)*, is the length of the **shortest path** (minimum length path) from *u* to *v*, if such a path exists.
+
+###7.1.1 Dijkstra's Algorithm
+```python
+DijkstraShortestPaths(g,v):
+#       input:      a simple undirected weighted graph g with nonnegative edge weights, and a distinguished vertex v of g
+#       output:     a label u.d for each vertex u of g, such that u.d is the distance from v to u in g
+v.d = 0
+for u in g.vertices():
+    if u != v:
+        u.d = float("inf")
+q = PriorityQ(g.vertices()) # priority queue with d label as key
+while len(q) > 0:
+    u = q.removeMin()
+    for z in g.areAdjacent(u):
+        if q.contains(z):
+            if u.d + g.getWeight(u,z) < z.d:
+                z.d = u.d + g.getWeight(u,z)
+                q.changeKey(z,z.d)
+return [u.d for u in g.vertices()]
+```
+
+####Theorem 7.2
+Given a weighted n-vertex graph *G* with *m* edges, each with a non-negative weight, Dijkstra's algorithm can be implemented to find all shortest paths from a vertex *v* in *G* in *O(mlogn)* time.
+
+###7.1.2 The Bellman-Ford Shortest Paths Algorithm
+```python
+BellmanFordShortestPaths(g,v):
+#       input:      a weighted directed graph g with n vertices, and a vertex v of g
+#       output:     a label u.d for each vertex u of g, such that u.d is the distance from v to u in g, or null if g has a negative-weight cycle
+v.d = 0
+for u in g.vertices():
+    if u != v:
+        u.d = float("inf")
+for i in range(n) - 1: # run n-1 times
+    for e in g.edges(): # perform relaxation
+        if e.origin.d + e.weight < e.destination.d:
+            e.destination.d = e.origin.d + e.weight
+for e in g.edges(): # check for relaxation
+    if e.origin.d + e.weight < e.destination.d:
+        return null
+return [u.d for u in g.vertices()]
+```
+
+####Theorem 7.5
+Given a weighted directed graph *G* with *n* vertices and *m* edges, and a vertex *v* of *G*, the Bellman-Ford algorithm computes the distance from *v* to all other vertices of *G* or determines that *G* contains a negative-weight cycle in *O(nm)* time.
+
+###7.1.3 Shortest Paths in Directed Acyclic Graphs
+The single source shortest paths problems can be solved quicker if the digraph has not directed cycles, that is, it is a weighted directed acyclic graph (DAG).
+
+```python
+DAGShortestPaths(g,v):
+#       input:      a weighted directed acyclic graph g with n vertices and m edges, and a distinguished vertex v in g
+#       output:     a label u.d, for each vertex u of g, such that u.d is the distance from v to u in g
+V = TopologicalSort(g)
+v.d = 0
+for u in V:
+    if u != v:
+        u.d = float("inf")
+for i in range(n) - 1:
+    for e in outgoingEdges(V[i]): # perform relaxation
+        if e.origin.d + e.weight < e.destination.d:
+            e.destination.d = e.origin.d + e.weight
+return [u.d for u in V]
+```
+####Theorem 7.6
+*DAGShortestPaths* computes the distance from a start vertex *v* to each other vertex in a directed n-vertex graph *G* with *m* edges in *O(n+m)* time.
+
 ##7.2 All-Pairs Shortest Paths
 ##7.3 Minimum Spanning Trees
