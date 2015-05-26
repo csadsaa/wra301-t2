@@ -421,7 +421,7 @@ A **flow network** consists of a
 - connected digraph *G* with nonnegative integer weights on the edges, where the weight of an edge *e* is called the **capacity** *c(e)* of *e*
 - two vertices that are labeled *s* (source) and *t* (sink) such that *s* has no incoming edges and *t* has no outgoing edges.
 
-A *flow* for network *N* is an assignment of an integer value *f(e)* (called the **flow of edge *e***) to each edge *e* of G that satisfies the following properties:
+A *flow* for network *N* is an assignment of an integer value *f(e)* (called the **flow of edge *e* **) to each edge *e* of G that satisfies the following properties:
 - *0 &le; f(e) &le; c(e)* **capacity rule**
 - For each vertex (except *s* and *t*): sum of *f(e)* for incoming edges = sum of *f(e)* for outgoing edges
 
