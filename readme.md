@@ -414,3 +414,18 @@ return T
 
 ####Theorem 7.14
 *Borůvka's algorithm* computes a minimum spanning tree for a connected weighted graph *G* with *n* vertices and *m* edges in *O(mlogn)* time.
+
+##8.1 Flows and Cuts
+###8.1.1 Flow Networks
+A **flow network** consists of a 
+- connected digraph *G* with nonnegative integer weights on the edges, where the weight of an edge *e* is called the **capacity** *c(e)* of *e*
+- two vertices that are labeled *s* (source) and *t* (sink) such that *s* has no incoming edges and *t* has no outgoing edges.
+
+A *flow* for network *N* is an assignment of an integer value *f(e)* (called the **flow of edge *e***) to each edge *e* of G that satisfies the following properties:
+- *0 &le; f(e) &le; c(e)* **capacity rule**
+- For each vertex (except *s* and *t*): sum of *f(e)* for incoming edges = sum of *f(e)* for outgoing edges
+
+The **value of a flow *f*** is denoted by |*f*| and is equal to the total amount of flow coming out of the source (or going in to the sink for that matter).
+
+A **maximal flow** for a flow network *N* is a flow with maximum value over all flows for *N*.
+
